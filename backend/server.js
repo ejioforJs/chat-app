@@ -11,7 +11,7 @@ import { Server } from "socket.io";
 import cors from "cors"
 
 const corsOptions ={
-  origin:'http://localhost:3000', 
+  origin:'https://jweb-chat-app.onrender.com', 
   credentials:true,            //access-control-allow-credentials:true
   optionSuccessStatus:200
 }
@@ -58,7 +58,7 @@ const server = app.listen(PORT, console.log(`server started on port ${PORT}`));
 const io = new Server(server, {
   pingTimeout: 60000,
   cors: {
-    origin: 'https://chat-app-genu.onrender.com',
+    origin: 'https://jweb-chat-app.onrender.com',
   },
 });
 
