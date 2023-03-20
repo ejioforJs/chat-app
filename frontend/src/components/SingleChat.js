@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import ProfileModal from "./miscelleneous/ProfileModal";
-import Lottie from "react-lottie";
+import Lottie from "lottie-react";
 import animationData from "../animations/typing.json";
 import io from "socket.io-client";
 import UpdateGroupChatModal from "./miscelleneous/UpdateGroupChatModal";

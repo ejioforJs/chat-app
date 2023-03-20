@@ -1,8 +1,9 @@
-const mongoose = require('mongoose');
+import pkg from "mongoose";
+const { Schema, model } = pkg;
 
-const notifModel = mongoose.Schema(
+const notifModel = Schema(
   {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'Message',
   },
   {
@@ -10,5 +11,5 @@ const notifModel = mongoose.Schema(
   }
 );
 
-const Notif = mongoose.model('Notif', notifModel);
-module.exports = Notif;
+const Notif = model('Notif', notifModel);
+export default Notif;

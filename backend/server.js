@@ -1,19 +1,25 @@
-const express = require('express');
-const dotenv = require('dotenv');
-const { chats } = require('./data/data');
-const connectdb = require("./config/db")
-const userRoutes = require('./routes/userRoutes');
-const chatRoutes = require('./routes/chatRoutes');
-const messageRoutes = require('./routes/messageRoutes');
-const mongoose = require('mongoose');
-const { notFound, errorHandler } = require('./middleware/errorMiddleware');
-const path = require("path")
+import express, { json, urlencoded } from 'express';
+import { config } from 'dotenv';
+import userRouter from './routes/userRoutes.js';
+import chatRouter from './routes/chatRoutes.js';
+import messageRouter from './routes/messageRoutes.js';
+import pkg from 'mongoose';
+const { connect } = pkg;
+import { notFound, errorHandler } from './middleware/errorMiddleware.js';
+import { resolve, join } from "path";
+import { Server } from "socket.io";
+import cors from "cors"
 
-dotenv.config();
-connectdb()
+const corsOptions ={
+  origin:'http://localhost:3000', 
+  credentials:true,            //access-control-allow-credentials:true
+  optionSuccessStatus:200
+}
 
-mongoose
-  .connect(process.env.MONGODB_URI)
+// connectdb()
+config()
+
+connect(process.env.MONGODB_URI)
   .then(() => {
     console.log('connected to db');
   })
@@ -23,30 +29,22 @@ mongoose
 
 const app = express();
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(cors(corsOptions))
 
-// app.get('/', (req, res) => {
-//   res.send('api is running');
-// });
+app.use(json());
+app.use(urlencoded({ extended: false }));
 
-// app.get('/api/getList', (req,res) => {
-//   var list = ["item1", "item2", "item3"];
-//   res.json(list);
-//   console.log('Sent list of items');
-// });
+app.use('/api/user', userRouter);
+app.use('/api/chat', chatRouter);
+app.use('/api/message', messageRouter);
 
-app.use('/api/user', userRoutes);
-app.use('/api/chat', chatRoutes);
-app.use('/api/message', messageRoutes);
+const __dirname = resolve()
 
-// const __dirname = path.resolve()
-
-app.use(express.static(path.join(__dirname, "/frontend/build")))
+app.use(express.static(join(__dirname, "/frontend/build")))
 
 app.get("*", (req, res) =>
   res.sendFile(
-    path.join(__dirname, "/frontend/build/index.html")
+    join(__dirname, "/frontend/build/index.html")
   )
 )
 
@@ -57,7 +55,7 @@ const PORT = process.env.PORT || 2000;
 
 const server = app.listen(PORT, console.log(`server started on port ${PORT}`));
 
-const io = require('socket.io')(server, {
+const io = new Server(server, {
   pingTimeout: 60000,
   cors: {
     origin: 'http://localhost:3000',
