@@ -58,7 +58,7 @@ const server = app.listen(PORT, console.log(`server started on port ${PORT}`));
 const io = new Server(server, {
   pingTimeout: 60000,
   cors: {
-    origin: 'http://localhost:3000',
+    origin: 'https://chat-app-genu.onrender.com',
   },
 });
 
