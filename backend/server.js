@@ -10,11 +10,11 @@ import { resolve, join } from "path";
 import { Server } from "socket.io";
 import cors from "cors"
 
-const corsOptions ={
-  origin:'http://localhost:3000', 
-  credentials:true,            //access-control-allow-credentials:true
-  optionSuccessStatus:200
-}
+// const corsOptions ={
+//   origin:'http://localhost:3000', 
+//   credentials:true,            //access-control-allow-credentials:true
+//   optionSuccessStatus:200
+// }
 
 // connectdb()
 config()
@@ -29,7 +29,7 @@ connect(process.env.MONGODB_URI)
 
 const app = express();
 
-app.use(cors(corsOptions))
+app.use(cors())
 
 app.use(json());
 app.use(urlencoded({ extended: false }));
