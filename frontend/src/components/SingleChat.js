@@ -14,7 +14,7 @@ import io from "socket.io-client";
 import UpdateGroupChatModal from "./miscelleneous/UpdateGroupChatModal";
 import { ChatState } from "../context/ChatProvider";
 import ScrollableChat from "./ScrollableChat";
-const ENDPOINT = "http://localhost:2000";
+const ENDPOINT = "https://jweb-chat-app.onrender.com";
 var socket, selectedChatCompare;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
