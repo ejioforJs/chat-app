@@ -127,7 +127,7 @@ const Signup = () => {
   return (
     <VStack spacing="5px">
       <FormControl isRequired>
-        <FormLabel>Name</FormLabel>
+        <FormLabel>Full Name</FormLabel>
         <Input
           placeholder="Enter Your Name"
           onChange={(e) => setName(e.target.value)}
